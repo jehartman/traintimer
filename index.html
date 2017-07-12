@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <link rel ="stylesheet" type ="text/css" href ="assets/style/style.css">
+  <title>Train Calculator</title>
+  <script src="https://cdn.jsdelivr.net/momentjs/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body background>
+<div class="main">
+  <h1>Train Calculator</h1>
+
+  <p>Trains begin leaving the station at 3:00 AM.</p>
+  <p>A train departs every 17 minutes without fail.</p>
+  <p>If the current time is:
+    <form>
+      <input type="time" name="userTime">
+      <input type="submit" id="submitButton"><br>
+    </form>
+    it will be <span id="trainDelay">0</span> minutes until the next train arrives.</p>
+</div>
+
+<script>
+
+    var tFrequency = 17;
+    var firstTime = "03:00";
+    var trainStartConverted = moment(firstTime, "hh:mm").subtract(1, "years");
+    console.log(trainStartConverted);
+    var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+    var diffTime = moment().diff(moment(trainStartConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    var tRemainder = diffTime % tFrequency;
+    console.log(tRemainder);
+
+    var tMinutesTillTrain = tFrequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+
+    $(document).ready(function() {
+      console.log(moment(currentTime).format("hh:mm"));
+
+      function displayCurrent () {
+      $("#currentTime").html(moment(currentTime).format("hh:mm"));
+    }
+
+    displayCurrent ();
+
+    $("#submitButton").on("click", function(event) {
+      event.preventDefault();
+      var timeInput = document.getElementById("name");
+      console.log(moment(timeInput).format("hh:mm"));
+    });
+
+});
+
+  </script>
+
+</body>
+
+</html>
